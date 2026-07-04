@@ -1,8 +1,1 @@
-node_modules/
-dist/
-.pnpm/
-.angular/
-.env
-.env.*
-.env.production
-.env.example
+<PASTE THE PERFECT .gitignore HERE>

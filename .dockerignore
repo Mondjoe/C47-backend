@@ -1,42 +1,46 @@
-# Dependencies
-node_modules/
-.pnpm/
-.pnpm-store/
-npm-debug.log
-yarn-debug.log
-yarn-error.log
+# ------------------------------------------------------
+# 1. Base image
+# ------------------------------------------------------
+FROM node:20-alpine AS base
 
-# Build output
-dist/
-build/
+# Enable pnpm
+RUN corepack enable
 
-# Environment files
-.env
-.env.*
-*.local
+WORKDIR /app
 
-# Logs
-logs/
-*.log
-*.pid
-*.seed
-*.pid.lock
+# ------------------------------------------------------
+# 2. Install dependencies
+# ------------------------------------------------------
+FROM base AS deps
 
-# OS / Editor junk
-.DS_Store
-Thumbs.db
-.vscode/
-.idea/
-*.swp
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
-# Prisma
-prisma/migrations/*/steps.json
-prisma/migrations/*/schema.prisma.tmp
+# ------------------------------------------------------
+# 3. Build the application
+# ------------------------------------------------------
+FROM deps AS build
 
-# Tests
-coverage/
-test-results/
+COPY . .
+RUN pnpm run build
 
-# Cache
-.cache/
-.tmp/
+# ------------------------------------------------------
+# 4. Production image
+# ------------------------------------------------------
+FROM base AS prod
+
+ENV NODE_ENV=production
+
+# Copy only what is needed for production
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
+COPY package.json ./
+
+# Prisma Client (if you use Prisma)
+COPY prisma ./prisma
+RUN pnpm prisma generate
+
+# ------------------------------------------------------
+# 5. Start command
+# ------------------------------------------------------
+CMD ["node", "dist/main.js"]
