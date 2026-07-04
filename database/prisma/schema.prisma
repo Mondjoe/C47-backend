@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id        String   @id @default(uuid())
+  address   String   @unique
+  createdAt DateTime @default(now())
+
+  balances        Balance[]
+  transactions    SolanaTransaction[]
+  stakeAccounts   SolanaStakeAccount[]
+}
+
+model Balance {
+  id        String   @id @default(uuid())
+  accountId String
+  lamports  BigInt
+  updatedAt DateTime @updatedAt
+
+  account Account @relation(fields: [accountId], references: [id])
+}
+
+model SolanaBlock {
+  slot       BigInt   @id
+  blockhash  String
+  parentSlot BigInt
+  timestamp  BigInt
+  createdAt  DateTime @default(now())
+
+  transactions SolanaTransaction[]
+}
+
+model SolanaTransaction {
+  id            String   @id @default(uuid())
+  signature     String   @unique
+  slot          BigInt
+  success       Boolean
+  fee           BigInt
+  raw           Json
+  timestamp     BigInt
+  accountId     String?
+  createdAt     DateTime @default(now())
+
+  block   SolanaBlock @relation(fields: [slot], references: [slot])
+  account Account?    @relation(fields: [accountId], references: [id])
+}
+
+model SolanaStakeAccount {
+  id              String   @id @default(uuid())
+  accountId       String
+  stakePubkey     String   @unique
+  delegatedStake  BigInt
+  voterAddress    String
+  activationEpoch BigInt
+  deactivationEpoch BigInt?
+  state           String
+  updatedAt       DateTime @updatedAt
+
+  account Account @relation(fields: [accountId], references: [id])
+}
+
+model SolanaValidator {
+  voteKey        String   @id
+  identityKey    String
+  commission     Int
+  activatedStake BigInt
+  epoch          BigInt
+  lastVote       BigInt
+  rootSlot       BigInt
+  credits        BigInt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model SolanaReward {
+  id          String   @id @default(uuid())
+  epoch       BigInt
+  address     String
+  amount      BigInt
+  postBalance BigInt
+  rewardType  String
+  commission  Int?
+  createdAt   DateTime @default(now())
+}

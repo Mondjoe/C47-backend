@@ -1,0 +1,9 @@
+generator client {
+  provider  = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "postgresql" // or mysql or sqlite — whichever you use
+  url      = env("DATABASE_URL")
+}
