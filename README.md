@@ -1,98 +1,156 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+<P# C47 Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A production-ready backend built with **NestJS**, **Prisma**, **pnpm**, **Redis/BullMQ**, and deployed using **Railway**.  
+This service powers the validator dashboard, RPC indexers, queue processors, and API endpoints for the C47 ecosystem.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🚀 Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **NestJS Modular Architecture**
+- **Prisma ORM** with PostgreSQL
+- **BullMQ / Redis** for background jobs and queue processing
+- **RPC Indexers** for multiple chains (Solana, Aptos, NEAR, Ethereum, BNB, Polygon, Avalanche)
+- **Config-driven environment setup**
+- **Production-ready Dockerfile**
+- **Railway RAILPACK deployment**
+- **pnpm** for fast, clean dependency management
 
-## Project setup
+---
 
-```bash
-$ pnpm install
-```
+## 📁 Project Structure
 
-## Compile and run the project
+backend/
+│
+├── src/
+│   ├── main.ts
+│   ├── app.module.ts
+│   │
+│   ├── modules/
+│   │   ├── user/
+│   │   ├── auth/
+│   │   ├── queue/
+│   │   ├── rpc/
+│   │   └── common/
+│   │
+│   ├── config/
+│   └── utils/
+│
+├── prisma/
+│   ├── schema.prisma
+│   └── migrations/
+│
+├── test/
+│
+├── dist/                # build output
+├── node_modules/        # dependencies
+│
+├── .env.example         # safe template
+├── .env.production      # production template (ignored)
+├── .gitignore
+├── .dockerignore
+├── Dockerfile
+├── railway.json
+│
+├── package.json
+├── pnpm-lock.yaml
+└── tsconfig.json
 
-```bash
-# development
-$ pnpm run start
+---
 
-# watch mode
-$ pnpm run start:dev
+## 🔧 Installation
 
-# production mode
-$ pnpm run start:prod
-```
+Install dependencies using **pnpm**:
 
-## Run tests
 
-```bash
-# unit tests
-$ pnpm run test
+---
 
-# e2e tests
-$ pnpm run test:e2e
+## 🛠️ Development
 
-# test coverage
-$ pnpm run test:cov
-```
+Start the development server:
 
-## Deployment
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Run Prisma migrations:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
 
-```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
-```
+Generate Prisma Client:
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## 🧪 Testing
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🏗️ Build
 
-## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Build output is stored in:
 
-## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+
+## 🚀 Production
+
+Start the production server:
+
+
+This runs:
+
+
+---
+
+## 🐳 Docker
+
+Build the Docker image:
+
+
+Run the container:
+
+
+---
+
+## ☁️ Railway Deployment
+
+This project includes a `railway.json` file that defines:
+
+- Build command  
+- Start command  
+- Runtime  
+- Replica count  
+- Restart policy  
+
+Railway automatically reads this file during deployment.
+
+Environment variables must be added in:
+
+**Railway → helpful-prosperity → Variables**
+
+Use `.env.example` as a reference.
+
+---
+
+## 🔐 Environment Variables
+
+Environment variables are **not committed** to the repository.
+
+See:
+
+
+for the full list of required variables.
+
+Production secrets must be added directly in Railway.
+
+---
+
+## 📜 License
+
+UNLICENSED — internal project.
+
+---
+
+## ✨ Author
+
+Charm_Capsule  
+C47 / Heinhtat Professional Services LLC
