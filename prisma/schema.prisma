@@ -9,31 +9,11 @@ datasource db {
 
 model Validator {
   id        String   @id @default(uuid())
-  chainId   String
-  address   String
-  name      String?
+  address   String   @unique
   createdAt DateTime @default(now())
 
-  chain     Chain             @relation(fields: [chainId], references: [id])
   metrics   ValidatorMetric[]
   logs      ValidatorLog[]
-  nodes     Node[]
-
-  @@unique([address, chainId])
-}
-
-model Chain {
-  id         String      @id @default(uuid())
-  name       String
-  validators Validator[]
-}
-
-model Node {
-  id          String   @id @default(uuid())
-  validatorId String
-  status      String
-
-  validator   Validator @relation(fields: [validatorId], references: [id])
 }
 
 model ValidatorMetric {
