@@ -6,7 +6,9 @@ export class RedisService {
   private client: RedisClientType;
 
   constructor() {
-    this.client = createClient();
+    this.client = createClient({
+      url: process.env.REDIS_URL,
+    });
     this.client.connect();
   }
 
