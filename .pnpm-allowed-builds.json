@@ -1,0 +1,8 @@
+{
+  "allowedPackages": [
+    "@prisma/engines",
+    "prisma",
+    "@nestjs/core",
+    "msgpackr-extract"
+  ]
+}
