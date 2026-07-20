@@ -29,6 +29,7 @@ RUN pnpm run build
 FROM node:20-alpine AS prod
 
 RUN corepack enable
+RUN corepack prepare pnpm@8.15.5 --activate   # ← REQUIRED FIX
 WORKDIR /app
 ENV NODE_ENV=production
 
