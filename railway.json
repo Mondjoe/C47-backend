@@ -1,14 +1,13 @@
-{
+l{
   "$schema": "https://railway.com/railway.schema.json",
   "build": {
-    "builder": "RAILPACK",
-    "buildCommand": "pnpm install --frozen-lockfile && pnpm run build",
-    "buildEnvironment": "V3"
+    "builder": "docker",
+    "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "pnpm run start:prod",
     "runtime": "V2",
     "numReplicas": 1,
+    "startCommand": "node dist/main.js",
     "sleepApplication": false,
     "useLegacyStacker": false,
     "ipv6EgressEnabled": false,
