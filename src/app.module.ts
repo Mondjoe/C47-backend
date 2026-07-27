@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
-import { PrismaService } from './prisma.service';
+import { PrismaService } from './database/prisma/prisma.service';
 import { RedisService } from './cache/redis.service';
 import { RpcManager } from './rpc/rpc.manager';
 import { SolanaService } from './modules/solana/solana.service';
