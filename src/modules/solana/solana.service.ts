@@ -1,39 +1,56 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { RpcManager } from '../../rpc/rpc.manager';
-import { PrismaService } from '../../prisma.service';
 
 @Injectable()
 export class SolanaService {
-  private readonly logger = new Logger(SolanaService.name);
+  constructor(private readonly rpc: RpcManager) {}
 
-  constructor(
-    private readonly rpc: RpcManager,
-    private readonly prisma: PrismaService,
-  ) {}
+  // Latest slot
+  async getLatestSlot() {
+    return await this.rpc.connection.getSlot();
+  }
 
-  async indexValidatorSlot(validatorAddress: string) {
-    const slot = await this.rpc.call<number>('getSlot');
-    this.logger.debug(`Slot: ${slot} for ${validatorAddress}`);
-
-    await this.prisma.validatorMetric.create({
-      data: {
-        validatorId: validatorAddress, // or mapped ID
-        slot,
-        value: 1,
-      },
+  // Fetch a block
+  async getBlock(slot: number) {
+    return await this.rpc.connection.getBlock(slot, {
+      maxSupportedTransactionVersion: 0,
     });
   }
 
-  async indexValidatorBalance(validatorAddress: string) {
-    const lamports = await this.rpc.call<number>('getBalance', [validatorAddress]);
-    const sol = lamports / 1_000_000_000;
+  // Balance (lamports)
+  async getBalance(address: string) {
+    return await this.rpc.connection.getBalance(address);
+  }
 
-    await this.prisma.validatorMetric.create({
-      data: {
-        validatorId: validatorAddress,
-        slot: 0,
-        value: sol,
+  // Stake accounts
+  async getStakeAccounts(address: string) {
+    return await this.rpc.connection.getParsedProgramAccounts(
+      this.rpc.stakeProgramId,
+      {
+        filters: [
+          {
+            memcmp: {
+              offset: 0,
+              bytes: address,
+            },
+          },
+        ],
       },
-    });
+    );
+  }
+
+  // Epoch info
+  async getEpochInfo() {
+    return await this.rpc.connection.getEpochInfo();
+  }
+
+  // Validators (vote accounts)
+  async getValidators() {
+    return await this.rpc.connection.getVoteAccounts();
+  }
+
+  // Rewards (inflation rewards)
+  async getRewards(addresses: string[]) {
+    return await this.rpc.connection.getInflationReward(addresses);
   }
 }
