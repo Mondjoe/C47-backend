@@ -29,7 +29,7 @@ export class SolanaService {
     return await this.rpc.call<any>('getVoteAccounts');
   }
 
-  async getRewards(addresses: string[]) {
-    return await this.rpc.call<any>('getInflationReward', [addresses]);
+  async getRewards(address: string) {
+    return await this.rpc.call<any>('getInflationReward', [[address]]);
   }
 }
