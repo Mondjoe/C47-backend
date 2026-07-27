@@ -10,7 +10,7 @@ export class SolanaQueue {
 
   constructor(private readonly redis: RedisService) {
     this.queue = new Queue('solana-indexer', {
-      connection: this.redis.getConnection(),
+      connection: { host: '127.0.0.1', port: 6379 }
     });
   }
 
