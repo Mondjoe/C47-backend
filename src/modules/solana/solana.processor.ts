@@ -18,10 +18,8 @@ export class SolanaProcessor {
 
         switch (job.name) {
           case 'index-slot':
-            await this.solana.indexValidatorSlot(validatorAddress);
-            break;
-          case 'index-balance':
-            await this.solana.indexValidatorBalance(validatorAddress);
+            await this.solana.getLatestSlot();
+await this.solana.getBalance(validatorAddress);
             break;
           default:
             this.logger.warn(`Unknown job: ${job.name}`);
