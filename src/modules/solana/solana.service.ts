@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { RpcManager } from '../../rpc/rpc.manager';
 import { PrismaService } from '../../database/prisma/prisma.service';
-
 @Injectable()
 export class SolanaService {
   constructor(
