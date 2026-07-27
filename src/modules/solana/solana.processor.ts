@@ -27,7 +27,7 @@ export class SolanaProcessor {
             this.logger.warn(`Unknown job: ${job.name}`);
         }
       },
-      { connection: this.redis.getConnection() },
+      { connection: { host: '127.0.0.1', port: 6379 }
     );
   }
 }
