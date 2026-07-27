@@ -3,13 +3,13 @@ import { PrismaService } from './database/prisma/prisma.service';
 
 @Injectable()
 export class AppService {
-  constructor(private prisma: PrismaService) {}     // ← ADD THIS
+  constructor(private prisma: PrismaService) {}
 
   getHello(): string {
     return 'Hello World!';
   }
 
   getValidators() {
-    return this.prisma.validator.findMany();        // ← NOW THIS WORKS
+    return this.prisma.validator.findMany();
   }
 }
