@@ -5,52 +5,31 @@ import { RpcManager } from '../../rpc/rpc.manager';
 export class SolanaService {
   constructor(private readonly rpc: RpcManager) {}
 
-  // Latest slot
   async getLatestSlot() {
-    return await this.rpc.connection.getSlot();
+    return await this.rpc.call<number>('getSlot');
   }
 
-  // Fetch a block
   async getBlock(slot: number) {
-    return await this.rpc.connection.getBlock(slot, {
-      maxSupportedTransactionVersion: 0,
-    });
+    return await this.rpc.call<any>('getBlock', [slot]);
   }
 
-  // Balance (lamports)
   async getBalance(address: string) {
-    return await this.rpc.connection.getBalance(address);
+    return await this.rpc.call<number>('getBalance', [address]);
   }
 
-  // Stake accounts
   async getStakeAccounts(address: string) {
-    return await this.rpc.connection.getParsedProgramAccounts(
-      this.rpc.stakeProgramId,
-      {
-        filters: [
-          {
-            memcmp: {
-              offset: 0,
-              bytes: address,
-            },
-          },
-        ],
-      },
-    );
+    return await this.rpc.call<any>('getProgramAccounts', [address]);
   }
 
-  // Epoch info
   async getEpochInfo() {
-    return await this.rpc.connection.getEpochInfo();
+    return await this.rpc.call<any>('getEpochInfo');
   }
 
-  // Validators (vote accounts)
   async getValidators() {
-    return await this.rpc.connection.getVoteAccounts();
+    return await this.rpc.call<any>('getVoteAccounts');
   }
 
-  // Rewards (inflation rewards)
   async getRewards(addresses: string[]) {
-    return await this.rpc.connection.getInflationReward(addresses);
+    return await this.rpc.call<any>('getInflationReward', [addresses]);
   }
 }
