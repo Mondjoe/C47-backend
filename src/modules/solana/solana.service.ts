@@ -4,7 +4,10 @@ import { PrismaService } from '../../database/prisma/prisma.service';
 
 @Injectable()
 export class SolanaService {
-  constructor(private readonly rpc: RpcManager) {}
+  constructor(
+    private readonly rpc: RpcManager,
+    private readonly prisma: PrismaService,
+  ) {}
 
   async getLatestSlot() {
     return await this.rpc.call<number>('getSlot');
