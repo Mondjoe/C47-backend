@@ -19,13 +19,16 @@ export class SolanaProcessor {
         switch (job.name) {
           case 'index-slot':
             await this.solana.getLatestSlot();
-await this.solana.getBalance(validatorAddress);
+            await this.solana.getBalance(validatorAddress);
             break;
+
           default:
             this.logger.warn(`Unknown job: ${job.name}`);
         }
       },
-      { connection: { host: '127.0.0.1', port: 6379 }
+      {
+        connection: { host: '127.0.0.1', port: 6379 },
+      },
     );
   }
 }
