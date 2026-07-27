@@ -23,4 +23,4 @@ import { SolanaCron } from './modules/solana/solana.cron';
     SolanaCron,
   ],
 })
-export class AppModule {}
+export class AppModule {} (app.service.ts)
