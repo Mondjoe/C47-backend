@@ -1,20 +1,35 @@
-import axios from 'axios';
+import { Injectable } from '@nestjs/common';
+import { RpcManager } from '../../rpc/rpc.manager';
 
-export class RpcManager {
-  constructor(private readonly url: string) {}
+@Injectable()
+export class SolanaService {
+  constructor(private readonly rpc: RpcManager) {}
 
-  async call<T = any>(method: string, params: any[] = []): Promise<T> {
-    const { data } = await axios.post(this.url, {
-      jsonrpc: '2.0',
-      id: 1,
-      method,
-      params,
-    });
+  async getLatestSlot() {
+    return await this.rpc.call<number>('getSlot');
+  }
 
-    if (data.error) {
-      throw new Error(data.error.message);
-    }
+  async getBlock(slot: number) {
+    return await this.rpc.call<any>('getBlock', [slot]);
+  }
 
-    return data.result as T;
+  async getBalance(address: string) {
+    return await this.rpc.call<number>('getBalance', [address]);
+  }
+
+  async getStakeAccounts(address: string) {
+    return await this.rpc.call<any>('getProgramAccounts', [address]);
+  }
+
+  async getEpochInfo() {
+    return await this.rpc.call<any>('getEpochInfo');
+  }
+
+  async getValidators() {
+    return await this.rpc.call<any>('getVoteAccounts');
+  }
+
+  async getRewards(addresses: string[]) {
+    return await this.rpc.call<any>('getInflationReward', [addresses]);
   }
 }
