@@ -8,8 +8,13 @@ import { SolanaQueue } from './modules/solana/solana.queue';
 import { SolanaProcessor } from './modules/solana/solana.processor';
 import { SolanaCron } from './modules/solana/solana.cron';
 
+import { DaoModule } from './dao/dao.module';
+
 @Module({
-  imports: [ScheduleModule.forRoot()],
+  imports: [
+    ScheduleModule.forRoot(),
+    DaoModule,
+  ],
   providers: [
     PrismaService,
     RedisService,
